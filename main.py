@@ -24,9 +24,18 @@ def get_ping_response(ip):
 if __name__ == "__main__":
     print(get_ip_address())
     ip = ip_split()
+    
     for i in range(1,255):
         print(f"Entering the loop at ip{i} ")
 
         joint_ip = f"{ip[0]}.{ip[1]}.{ip[2]}.{i}"
         get_ping_response(joint_ip)
     print(ip_list)
+    
+    
+'''
+    for host in ip_list:
+        name = socket.gethostbyaddr(host)
+        print(name[0])
+    
+'''
