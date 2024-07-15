@@ -3,7 +3,8 @@ from ping3 import ping
 import psutil
 import ipaddress 
 import re
-
+import netifaces
+from scapy.all import ARP, Ether, srp
 class color:
    GREEN = '\033[92m'  
    RED = '\033[91m'    
@@ -51,20 +52,24 @@ class myscan:
             return self.ip_list
         else:
             return []
-    
+  
     #gets the available ip
     def scan_network(self):
-        useable_ip = list(self.get_usable_ip())   
-        for address in useable_ip:
-            response = ping(address,timeout=1)
-            #print(f"Pinging IP {address} -> Response {response} ")
-            if response is not None:
-                self.available_ips.append(address)
-                #print(f"IP:{address} available")
-            else:
-                continue
+        self.get_usable_ip()
+        interfaces = "wlp9s0"
+        arp_requests = []
+        for ip in self.ip_list:
+            arp = ARP(pdst=ip)
+            ether = Ether(dst="ff:ff:ff:ff:ff:ff")
+            arp_request = ether/arp
+            arp_requests.append(arp_request)
+            
+        answered_list,unanswered_list  = srp(arp_requests,iface=interfaces,timeout=1,verbose=False)
+        for arp_req, arp_resp in answered_list:
+            self.available_ips.append(arp_resp.psrc)
+
         return self.available_ips
-    
+
     #scans if the port is available
     def scan_ports(self,address):
         ports = [22, 23, 25, 53, 80, 110, 143, 443, 445, 587, 3389, 3306, 5432, 5900]
