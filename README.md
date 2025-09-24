@@ -25,9 +25,8 @@ This Python script is a network scanning tool that discovers available devices o
 - **Potential Applications**:
   - **Network Administration**: Quickly map devices on a local network and check for open services.
   - **Security Testing**: Identify potentially vulnerable open ports on devices.
-  - **Educational**: Demonstrates networking concepts like ARP, port scanning, and socket programming, suitable for Computer Networks (CN) lab exercises.
   - **Integration**: Can be extended into larger tools for automated network monitoring or integrated with other scripts.
-- **Relation to Your CN Lab Environment**: This script aligns with your Java-based networking projects (e.g., ArpClient.java, ArpServer.java) by focusing on network discovery and communication, providing a Python alternative for similar tasks.
+
 
 ## Strengths
 - **Efficiency**: Fast scanning using ARP for IP discovery and socket connections for ports.
